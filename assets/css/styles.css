@@ -1,0 +1,11 @@
+footer {
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;
+    margin-top: 100px;
+}
+
+main.container {
+    margin-bottom: 150px!important;
+}
