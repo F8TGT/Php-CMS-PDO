@@ -10,7 +10,7 @@ include "partials/hero.php";
     <h2 class="text-center mb-4">Register</h2>
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form action="welcome.html" method="post">
+            <form action="welcome.php" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label">Full Name *</label>
                     <input type="text" class="form-control" id="name" required>
@@ -30,7 +30,7 @@ include "partials/hero.php";
                 <button type="submit" class="btn btn-primary w-100">Register</button>
             </form>
             <p class="mt-3 text-center">
-                Already have an account? <a href="login.html">Login here</a>.
+                Already have an account? <a href="login.php">Login here</a>.
             </p>
         </div>
     </div>
