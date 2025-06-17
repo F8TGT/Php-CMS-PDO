@@ -1,5 +1,6 @@
 <?php
-
+include __DIR__."/../../helpers.php";
+echo base_url("cms-pdo");
 ?>
 
 <!DOCTYPE html>
