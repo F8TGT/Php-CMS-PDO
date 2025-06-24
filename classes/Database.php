@@ -1,6 +1,6 @@
 <?php
 
-class database
+class Database
 {
     private $host = DB_HOST;
     private $db_name = DB_NAME;
