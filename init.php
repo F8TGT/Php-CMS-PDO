@@ -17,3 +17,4 @@ require_once "helpers.php";
 
 // DEFINE GLOBAL CONSTANTS
 const APP_NAME = "CMS PDO System";
+const PROJECT_DIR = "php-cms-pdo";

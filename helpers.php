@@ -4,13 +4,13 @@ function base_url($path = "")
 {
     $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? "https://" : "http://";
     $host = $_SERVER['HTTP_HOST'];
-    $base_url = $protocol.$host;
+    $base_url = $protocol.$host.'/'.PROJECT_DIR;
     return $base_url.'/'.ltrim($path, '/');
 }
 
 function base_path($path = "")
 {
-    $rootPath = dirname(__DIR__);
+    $rootPath = dirname(__DIR__).DIRECTORY_SEPARATOR.PROJECT_DIR;
     return $rootPath.DIRECTORY_SEPARATOR.ltrim($path, DIRECTORY_SEPARATOR);
 }
 

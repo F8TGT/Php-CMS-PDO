@@ -6,7 +6,10 @@ include "partials/hero.php";
 
 if (isPostRequest()) {
     $username = getPostData('username');
-    var_dump($username);
+    $email = getPostData('email');
+    $password = getPostData('password');
+
+    var_dump($_POST);
 }
 ?>
 
@@ -22,15 +25,15 @@ if (isPostRequest()) {
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address *</label>
-                    <input type="email" class="form-control" id="email" required>
+                    <input name="email" type="email" class="form-control" id="email" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password *</label>
-                    <input type="password" class="form-control" id="password" required>
+                    <input name="password" type="password" class="form-control" id="password" required>
                 </div>
                 <div class="mb-3">
                     <label for="confirm-password" class="form-label">Confirm Password *</label>
-                    <input type="password" class="form-control" id="confirm-password" required>
+                    <input name="confirm-password" type="password" class="form-control" id="confirm-password" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Register</button>
             </form>
