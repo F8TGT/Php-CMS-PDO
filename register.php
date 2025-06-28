@@ -9,7 +9,13 @@ if (isPostRequest()) {
     $email = getPostData('email');
     $password = getPostData('password');
 
-    var_dump($_POST);
+    $user = new User();
+
+    if ($user->register($username, $email, $password)) {
+        redirect("login.php");
+    } else {
+        echo "Registration Failed";
+    }
 }
 ?>
 
