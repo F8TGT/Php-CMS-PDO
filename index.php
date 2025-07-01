@@ -1,11 +1,17 @@
 <?php
 
 include "partials/header.php";
-include "partials/navbar.php";
-include "partials/hero.php";
+include base_path("partials/navbar.php");
+include base_path("partials/hero.php");
 
 $db = new Database();
 $db->getConnection();
+
+$article = new Article();
+$article = $article->get_all();
+
+var_dump($article);
+
 ?>
 
 <!-- Main Content -->
