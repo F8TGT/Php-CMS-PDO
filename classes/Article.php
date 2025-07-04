@@ -28,4 +28,19 @@ class Article
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function getArticleById($id) {
+        $query = "SELECT * FROM ".$this->table." WHERE id = :id Limit 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $article = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if ($article) {
+            return $article;
+        } else {
+            return false;
+        }
+    }
+
 }
