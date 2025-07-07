@@ -28,7 +28,8 @@ class Article
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getArticleById($id) {
+    public function getArticleById($id)
+    {
         $query = "SELECT * FROM ".$this->table." WHERE id = :id Limit 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
@@ -42,5 +43,28 @@ class Article
             return false;
         }
     }
+
+    public function getArticleWithOwnerByID($id)
+    {
+        $query = "SELECT articles.id, articles.title, articles.content, articles.image, articles.created_at, 
+        users.username AS author, users.email AS author_email FROM ".$this->table." 
+        JOIN users ON articles.user_id = users.id WHERE articles.id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $article = $stmt->fetch(PDO::FETCH_OBJ);
+
+        if ($article) {
+            return $article;
+        } else {
+            return false;
+        }
+    }
+
+    public function formatCreatedAt($date)
+    {
+        return date('F j, Y', strtotime($date));
+    }
+
 
 }

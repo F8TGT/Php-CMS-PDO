@@ -8,7 +8,7 @@ $articleId = isset($_GET["id"]) ? (int) $_GET["id"] : null;
 
 if ($articleId) {
     $article = new Article();
-    $articleData = $article->getArticleById($articleId);
+    $articleData = $article->getArticleWithOwnerByID($articleId);
 } else {
     echo "Article not found";
     exit;
@@ -17,30 +17,45 @@ if ($articleId) {
 
 <!-- Main Content -->
 <main class="container my-5">
-    <h2 class="text-center"><?php
-        echo $articleData->title; ?></h2>
     <!-- Featured Image -->
     <div class="mb-4">
         <?php
         if (!empty($articleData->image)): ?>
             <img
-                    src="<?php echo htmlspecialchars($articleData->image); ?>"
+                    src="<?php
+                    echo htmlspecialchars($articleData->image); ?>"
                     class="img-fluid w-100"
                     alt="Featured Image"
             >
         <?php
         else: ?>
             <img
-                    src="https://via.placeholder.com/1200x600"
+                    src="https://placehold.co/1200x600"
                     class="img-fluid w-100"
                     alt="Featured Image"
             >
         <?php
         endif; ?>
     </div>
+
+    <section>
+        <div class="container">
+            <h1 class="display-4"><?php
+                echo $articleData->title; ?></h1>
+            <small>
+                By <a href="#"><?php
+                    echo $articleData->author; ?></a>
+                <span><?php
+                    echo $article->formatCreatedAt($articleData->created_at) ?></span>
+            </small>
+        </div>
+    </section>
+
+
     <!-- Article Content -->
-    <article>
-        <?php echo htmlspecialchars($articleData->content); ?>
+    <article class="container my-5">
+        <?php
+        echo htmlspecialchars($articleData->content); ?>
     </article>
 
     <!-- Comments Section Placeholder -->
@@ -54,7 +69,7 @@ if ($articleId) {
 
     <!-- Back to Home Button -->
     <div class="mt-4">
-        <a href="index.html" class="btn btn-secondary">← Back to Home</a>
+        <a href="index.php" class="btn btn-secondary">← Back to Home</a>
     </div>
 </main>
 
