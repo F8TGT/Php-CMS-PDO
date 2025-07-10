@@ -41,6 +41,7 @@ class User
             $_SESSION['logged_in'] = true;
             $_SESSION['username'] = $user->username;
             $_SESSION['email'] = $user->email;
+            $_SESSION['user_id'] = $user->id;
             return true;
         }
         return false;
