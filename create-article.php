@@ -7,27 +7,22 @@ include "partials/admin/navbar.php";
 <!-- Main Content -->
 <main class="container my-5">
     <h2>Create New Article</h2>
-    <form action="admin.php" method="post">
+    <form method="post">
         <div class="mb-3">
             <label for="title" class="form-label">Article Title *</label>
-            <input type="text" class="form-control" id="title" placeholder="Enter article title" required>
+            <input name="title" type="text" class="form-control" id="title" placeholder="Enter article title" required>
         </div>
         <div class="mb-3">
             <label for="author" class="form-label">Author *</label>
-            <input type="text" class="form-control" id="author" placeholder="Enter author name" required>
+            <input name="author" type="text" class="form-control" id="author" placeholder="Enter author name" required>
         </div>
         <div class="mb-3">
             <label for="date" class="form-label">Published Date *</label>
-            <input type="date" class="form-control" id="date" required>
-        </div>
-        <div class="mb-3">
-            <label for="excerpt" class="form-label">Excerpt *</label>
-            <textarea class="form-control" id="excerpt" rows="3" placeholder="Enter a short excerpt"
-                      required></textarea>
+            <input name="date" type="date" class="form-control" id="date" required>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content *</label>
-            <textarea class="form-control" id="content" rows="10" placeholder="Enter article content"
+            <textarea name="content" class="form-control" id="content" rows="10" placeholder="Enter article content"
                       required></textarea>
         </div>
         <div class="mb-3">

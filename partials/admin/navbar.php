@@ -25,7 +25,7 @@
                     <a class="nav-link" href="profile.php">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <form action="<?php
+                    <form method="post" action="<?php
                     echo base_url("logout.php"); ?>">
                         <button type="submit" class="nav-link">Logout</button>
                     </form>
