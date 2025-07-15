@@ -75,5 +75,11 @@ class Article
         return date('F j, Y', strtotime($date));
     }
 
+    public function create($title, $content, $author_id, $created_at)
+    {
+        $query = "INSERT INTO ".$this->table." (title, content, user_id, created_at) VALUES (:title, :content, :user_id, :created_at)";
+        $stmt = $this->conn->prepare($query);
+
+    }
 
 }

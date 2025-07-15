@@ -2,6 +2,20 @@
 
 include "partials/admin/header.php";
 include "partials/admin/navbar.php";
+
+if (isPostRequest()) {
+    $title = $_POST["title"];
+    $content = $_POST["content"];
+    $author_id = $_SESSION["user_id"];
+    $created_at = $_POST["date"];
+
+    $article = new Article();
+
+    if($article->create($title, $content, $author_id, $created_at)){
+        redirect("admin.php");
+        exit;
+    }
+}
 ?>
 
 <!-- Main Content -->
@@ -11,10 +25,6 @@ include "partials/admin/navbar.php";
         <div class="mb-3">
             <label for="title" class="form-label">Article Title *</label>
             <input name="title" type="text" class="form-control" id="title" placeholder="Enter article title" required>
-        </div>
-        <div class="mb-3">
-            <label for="author" class="form-label">Author *</label>
-            <input name="author" type="text" class="form-control" id="author" placeholder="Enter author name" required>
         </div>
         <div class="mb-3">
             <label for="date" class="form-label">Published Date *</label>
