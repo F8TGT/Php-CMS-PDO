@@ -37,7 +37,7 @@ function redirect($url)
 
 function isPostRequest()
 {
-    return $_SERVER['REQUEST_METHOD'] === 'POST';
+    return $_SERVER['REQUEST_METHOD'] == "POST";
 }
 
 function getPostData($field, $default = null)

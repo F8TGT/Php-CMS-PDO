@@ -11,9 +11,11 @@ if (isPostRequest()) {
 
     $article = new Article();
 
-    if($article->create($title, $content, $author_id, $created_at)){
+    if ($article->create($title, $content, $author_id, $created_at)) {
         redirect("admin.php");
         exit;
+    } else {
+        echo "FAILED CREATING ARTICLE";
     }
 }
 ?>
@@ -21,7 +23,7 @@ if (isPostRequest()) {
 <!-- Main Content -->
 <main class="container my-5">
     <h2>Create New Article</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Article Title *</label>
             <input name="title" type="text" class="form-control" id="title" placeholder="Enter article title" required>
@@ -37,7 +39,7 @@ if (isPostRequest()) {
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Featured Image URL</label>
-            <input type="url" class="form-control" id="image" placeholder="Enter image URL">
+            <input name="featured_image" type="url" class="form-control" id="image" placeholder="Enter image URL">
         </div>
         <button type="submit" class="btn btn-success">Publish Article</button>
         <a href="admin.php" class="btn btn-secondary ms-2">Cancel</a>

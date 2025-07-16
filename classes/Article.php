@@ -79,7 +79,10 @@ class Article
     {
         $query = "INSERT INTO ".$this->table." (title, content, user_id, created_at) VALUES (:title, :content, :user_id, :created_at)";
         $stmt = $this->conn->prepare($query);
-
+        $stmt->bindParam(":title", $title);
+        $stmt->bindParam(":content", $content);
+        $stmt->bindParam(":user_id", $author_id);
+        $stmt->bindParam(":created_at", $created_at);
+        return $stmt->execute();
     }
-
 }
