@@ -9,6 +9,30 @@ if (isPostRequest()) {
     $author_id = $_SESSION["user_id"];
     $created_at = $_POST["date"];
 
+    $imagePath = '';
+    $targetDir = 'uploads/';
+    $error = '';
+
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
+
+    if (isset($_FILES['featured_image']) && $_FILES['featured_image']['error'] === 0) {
+        $targetFile = $targetDir.basename($_FILES['featured_image']['name']);
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+        $allowedTypes = ['jpg', 'jpeg', 'gif', 'png'];
+
+        if (in_array($_FILES["image"]["type"], $allowedTypes)) {
+            if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $targetFile)) {
+                $imagePath = $targetFile;
+            } else {
+                $error = 'There was an error uploading your file.';
+            }
+        } else {
+            $error = 'Only JPG, JPEG, PNG, and GIF file are allowed.';
+        }
+    }
+
     $article = new Article();
 
     if ($article->create($title, $content, $author_id, $created_at)) {
@@ -39,7 +63,7 @@ if (isPostRequest()) {
         </div>
         <div class="mb-3">
             <label for="image" class="form-label">Featured Image URL</label>
-            <input name="featured_image" type="url" class="form-control" id="image" placeholder="Enter image URL">
+            <input name="featured_image" type="file" class="form-control" id="image" placeholder="Enter image URL">
         </div>
         <button type="submit" class="btn btn-success">Publish Article</button>
         <a href="admin.php" class="btn btn-secondary ms-2">Cancel</a>
