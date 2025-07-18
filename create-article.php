@@ -35,7 +35,7 @@ if (isPostRequest()) {
 
     $article = new Article();
 
-    if ($article->create($title, $content, $author_id, $created_at)) {
+    if ($article->create($title, $content, $author_id, $created_at, $imagePath)) {
         redirect("admin.php");
         exit;
     } else {
