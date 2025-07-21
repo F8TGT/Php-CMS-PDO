@@ -14,7 +14,7 @@ if (isPostRequest()) {
     $error = '';
 
     if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0777, true);
+        mkdir($targetDir, 0755, true);
     }
 
     if (isset($_FILES['featured_image']) && $_FILES['featured_image']['error'] === 0) {
@@ -22,7 +22,9 @@ if (isPostRequest()) {
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
         $allowedTypes = ['jpg', 'jpeg', 'gif', 'png'];
 
-        if (in_array($_FILES["image"]["type"], $allowedTypes)) {
+        if (in_array($imageFileType, $allowedTypes)) {
+            $uniqueFileName = uniqid()."_".time().".".$imageFileType;
+            $targetFile = $targetFile."_".$uniqueFileName;
             if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $targetFile)) {
                 $imagePath = $targetFile;
             } else {
