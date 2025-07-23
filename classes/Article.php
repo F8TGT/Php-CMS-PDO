@@ -44,6 +44,23 @@ class Article
         }
     }
 
+    public function deleteWithImage($id)
+    {
+        $article = $this->getArticleById($id);
+        if ($article) {
+            if (!empty($article->image) && file_exists($article->image)) {
+                if (!unlink($article->image)) {
+                    return false;
+                }
+            }
+            $query = "DELETE FROM ".$this->table." WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+            return $stmt->execute();
+        }
+        return false;
+    }
+
     public function getArticleWithOwnerByID($id)
     {
         $query = "SELECT articles.id, articles.title, articles.content, articles.image, articles.created_at, 

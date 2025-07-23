@@ -22,7 +22,8 @@ $userArticles = $article->getArticlesByUser($userId);
                 <th>Author</th>
                 <th>Published Date</th>
                 <th>Excerpt</th>
-                <th>Actions</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -45,6 +46,8 @@ $userArticles = $article->getArticlesByUser($userId);
                         <td>
                             <a href="edit-article.php?id=<?php
                             echo $articleItem->id ?>" class="btn btn-sm btn-primary me-1">Edit</a>
+                        </td>
+                        <td>
                             <form method="POST" action="<?php
                             echo base_url("delete_article.php") ?>">
                                 <input type="hidden" name="id" value="<?php
