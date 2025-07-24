@@ -16,17 +16,14 @@ $articles = $article->get_all();
     <?php
     if (!empty($articles)): ?>
         <?php
-        foreach (
-            $articles
-
-            as $articleItem
-        ): ?>
+        foreach ($articles as $articleItem): ?>
             <div class="row mb-4">
                 <div class="col-md-4">
                     <?php
                     if (!empty($articleItem->image)): ?>
                         <img src="<?php
-                        echo htmlspecialchars($articleItem->image) ?>" class="img-fluid" alt="Blog Post Image">
+                        echo htmlspecialchars($articleItem->image) ?>" class="img-fluid" alt="Blog Post Image"
+                             style="width:350px; height:200px;">
                     <?php
                     else: ?>
                         <img src="https://placehold.co/350x200" class="img-fluid" alt="Blog Post Image">
