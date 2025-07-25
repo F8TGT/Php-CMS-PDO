@@ -2,15 +2,15 @@
 
 class Database
 {
-    private $host = DB_HOST;
-    private $db_name = DB_NAME;
-    private $username = DB_USER;
+    private string $host = DB_HOST;
+    private string $db_name = DB_NAME;
+    private string $username = DB_USER;
 
-    private $password = DB_PASS;
+    private string $password = DB_PASS;
 
-    public $conn;
+    public ?PDO $conn;
 
-    public function getConnection()
+    public function getConnection(): ?PDO
     {
         $this->conn = null;
         try {

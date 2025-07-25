@@ -2,8 +2,8 @@
 
 class Article
 {
-    private $conn;
-    private $table = 'articles';
+    private ?PDO $conn;
+    private string $table = 'articles';
 
     public function __construct()
     {
@@ -19,7 +19,7 @@ class Article
         return $content;
     }
 
-    public function get_all()
+    public function get_all(): array
     {
         $query = "SELECT * FROM ".$this->table." ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
@@ -38,13 +38,17 @@ class Article
         $article = $stmt->fetch(PDO::FETCH_OBJ);
 
         if ($article) {
-            return $article;
+            if ($article->user_id == $_SESSION['user_id']) {
+                return $article;
+            } else {
+                redirect("admin.php");
+            }
         } else {
             return false;
         }
     }
 
-    public function deleteWithImage($id)
+    public function deleteWithImage($id): bool
     {
         $article = $this->getArticleById($id);
         if ($article) {
@@ -82,7 +86,7 @@ class Article
         }
     }
 
-    public function getArticlesByUser($userId)
+    public function getArticlesByUser($userId): array
     {
         $query = "SELECT * FROM ".$this->table." WHERE user_id = :user_id ORDER BY created_at DESC";
         $stmt = $this->conn->prepare($query);
@@ -91,12 +95,12 @@ class Article
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function formatCreatedAt($date)
+    public function formatCreatedAt($date): string
     {
         return date('F j, Y', strtotime($date));
     }
 
-    public function create($title, $content, $author_id, $created_at, $image)
+    public function create($title, $content, $author_id, $created_at, $image): bool
     {
         $query = "INSERT INTO ".$this->table." (title, content, user_id, created_at, image) VALUES (:title, :content, :user_id, :created_at, :image)";
         $stmt = $this->conn->prepare($query);

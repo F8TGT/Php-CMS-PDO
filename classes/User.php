@@ -2,8 +2,8 @@
 
 class User
 {
-    private $conn;
-    private $table = 'users';
+    private ?PDO $conn;
+    private string $table = 'users';
 
     public function __construct()
     {
@@ -11,7 +11,7 @@ class User
         $this->conn = $database->getConnection();
     }
 
-    public function register($username, $email, $password)
+    public function register($username, $email, $password): bool
     {
         $query = "INSERT INTO ".$this->table." (username, email, password) VALUES (:username, :email, :password)";
         $stmt = $this->conn->prepare($query);
@@ -28,7 +28,7 @@ class User
         return false;
     }
 
-    public function login($email, $password)
+    public function login($email, $password): bool
     {
         $query = "SELECT * FROM ".$this->table." WHERE email = :email";
         $stmt = $this->conn->prepare($query);
@@ -47,7 +47,8 @@ class User
         return false;
     }
 
-    public function isLoggedIn() {
+    public function isLoggedIn(): bool
+    {
         return isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
     }
 }

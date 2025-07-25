@@ -2,6 +2,10 @@
 
 include "partials/admin/header.php";
 include "partials/admin/navbar.php";
+
+$articleId = isset($_GET['id']) ? (int) $_GET['id'] : null;
+$article = new Article();
+$articleData = $article->getArticleById($articleId);
 ?>
 
 <!-- Main Content -->
@@ -10,7 +14,8 @@ include "partials/admin/navbar.php";
     <form action="admin.php" method="post">
         <div class="mb-3">
             <label for="title" class="form-label">Article Title *</label>
-            <input type="text" class="form-control" id="title" value="Current Article Title" required>
+            <input type="text" class="form-control" id="title" value="<?php
+            echo $articleData->title ?>" required>
         </div>
         <div class="mb-3">
             <label for="author" class="form-label">Author *</label>
