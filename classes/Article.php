@@ -111,4 +111,33 @@ class Article
         $stmt->bindParam(":image", $image);
         return $stmt->execute();
     }
+
+    public function uploadImage($file): string
+    {
+        $targetDir = 'uploads/';
+
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true);
+        }
+
+        if (isset($file) && $file['error'] === 0) {
+            $targetFile = $targetDir.basename($file['name']);
+            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+            $allowedTypes = ['jpg', 'jpeg', 'gif', 'png'];
+
+            if (in_array($imageFileType, $allowedTypes)) {
+                $uniqueFileName = uniqid()."_".time().".".$imageFileType;
+                $targetFile = $targetFile."_".$uniqueFileName;
+                if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+                    return $targetFile;
+                } else {
+                    return 'There was an error uploading your file.';
+                }
+            } else {
+                return 'Only JPG, JPEG, PNG, and GIF file are allowed.';
+            }
+        }
+        return '';
+    }
+
 }

@@ -9,39 +9,17 @@ if (isPostRequest()) {
     $author_id = $_SESSION["user_id"];
     $created_at = $_POST["date"];
 
-    $imagePath = '';
-    $targetDir = 'uploads/';
-    $error = '';
-
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0755, true);
-    }
-
-    if (isset($_FILES['featured_image']) && $_FILES['featured_image']['error'] === 0) {
-        $targetFile = $targetDir.basename($_FILES['featured_image']['name']);
-        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-        $allowedTypes = ['jpg', 'jpeg', 'gif', 'png'];
-
-        if (in_array($imageFileType, $allowedTypes)) {
-            $uniqueFileName = uniqid()."_".time().".".$imageFileType;
-            $targetFile = $targetFile."_".$uniqueFileName;
-            if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $targetFile)) {
-                $imagePath = $targetFile;
-            } else {
-                $error = 'There was an error uploading your file.';
-            }
-        } else {
-            $error = 'Only JPG, JPEG, PNG, and GIF file are allowed.';
-        }
-    }
-
+    // UPLOADING IMAGE
     $article = new Article();
+    $imagePath = $article->uploadImage($_FILES["featured_image"]);
 
-    if ($article->create($title, $content, $author_id, $created_at, $imagePath)) {
-        redirect("admin.php");
-        exit;
-    } else {
-        echo "FAILED CREATING ARTICLE";
+    if (strpos($imagePath, 'error') === false) {
+        if ($article->create($title, $content, $author_id, $created_at, $imagePath)) {
+            redirect("admin.php");
+            exit;
+        } else {
+            echo "FAILED CREATING ARTICLE";
+        }
     }
 }
 ?>
