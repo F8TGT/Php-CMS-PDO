@@ -6,6 +6,25 @@ include "partials/admin/navbar.php";
 $articleId = isset($_GET['id']) ? (int) $_GET['id'] : null;
 $article = new Article();
 $articleData = $article->getArticleById($articleId);
+
+
+
+if (isPostRequest()) {
+    $title = $_POST["title"];
+    $content = $_POST["content"];
+    $author_id = $_SESSION["user_id"];
+    $created_at = $_POST["date"];
+    $imagePath = $article->uploadImage($_FILES['featured_image']);
+
+    if (strpos($imagePath, 'error') === false) {
+        if ($article->update($articleId, $title, $content, $author_id, $created_at, $imagePath)) {
+            redirect("admin.php");
+            exit;
+        } else {
+            echo "FAILED CREATING ARTICLE";
+        }
+    }
+}
 ?>
 
 <!-- Main Content -->

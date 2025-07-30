@@ -140,4 +140,14 @@ class Article
         return '';
     }
 
+    public function update($id, $title, $content, $author_id, $created_at, $imagePath = null)
+    {
+        $query = "UPDATE ".$this->table." SET title = :title, content = :content, user_id = :user_id, created_at = :created_at";
+
+        if($imagePath) {
+            $query .= ", image = :image";
+        }
+
+        $query .= " WHERE id = :id";
+    }
 }
