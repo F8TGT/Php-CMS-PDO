@@ -24,7 +24,7 @@ if ($articleId) {
             <img
                     src="<?php
                     echo htmlspecialchars($articleData->image); ?>"
-                    class="img-fluid w-100"
+                    class="img-fluid"
                     alt="Featured Image"
             >
         <?php
