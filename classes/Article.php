@@ -162,4 +162,9 @@ class Article
 
         return $stmt->execute();
     }
+
+    public function generateDummyData($num = 10) {
+        $query = "INSERT INTO " . $this->table . " (title, content, user_id, created_at, image) 
+        VALUES (:title, :content, :user_id, :created_at, :image) ";
+    }
 }

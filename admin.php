@@ -12,6 +12,11 @@ $userArticles = $article->getArticlesByUser($userId);
 <main class="container my-5">
     <h2 class="mb-4">Welcome <?php
         echo $_SESSION['username'] ?> to your Admin Dashboard</h2>
+
+    <form action="create-dummy-articles.php" method="post">
+        <button type="submit" class="btn btn-primary mb-3">Generate Articles</button>
+    </form>
+
     <!-- Articles Table -->
     <div class="table-responsive">
         <table class="table table-bordered table-hover align-middle">
