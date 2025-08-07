@@ -144,7 +144,7 @@ class Article
     {
         $query = "UPDATE ".$this->table." SET title = :title, content = :content, user_id = :user_id, created_at = :created_at";
 
-        if($imagePath) {
+        if ($imagePath) {
             $query .= ", image = :image";
         }
 
@@ -163,8 +163,37 @@ class Article
         return $stmt->execute();
     }
 
-    public function generateDummyData($num = 10) {
-        $query = "INSERT INTO " . $this->table . " (title, content, user_id, created_at, image) 
-        VALUES (:title, :content, :user_id, :created_at, :image) ";
+    public function generateDummyData($num = 10): true
+    {
+        $query = "INSERT INTO ".$this->table." (title, content, user_id, created_at, image) 
+                   VALUES (:title, :content, :user_id, :created_at, :image)";
+
+        $stmt = $this->conn->prepare($query);
+
+        $dummy_titles = [
+            'The Future of Technology', 'The Importance of Education',
+            'How to Stay Productive', 'A Guide to Healthy Living',
+            'Exploring the World of Science', 'Understanding Mental Health',
+            'The Rise of AI', 'The Power of Positive Thinking',
+            'Achieving Financial Freedom', 'The Benefits of Exercise',
+        ];
+
+        $dummy_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.";
+        $dummy_image = "https://placehold.co/350x200";
+        $user_id = 11;
+        $created_at = date('Y-m-d');
+
+        for ($i = 0; $i < $num; $i++) {
+            $title = $dummy_titles[array_rand($dummy_titles)];
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':content', $dummy_content);
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->bindParam(':created_at', $created_at);
+            $stmt->bindParam(':image', $dummy_image);
+
+            $stmt->execute();
+        }
+
+        return true;
     }
 }
