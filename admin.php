@@ -13,7 +13,7 @@ $userArticles = $article->getArticlesByUser($userId);
     <h2 class="mb-4">Welcome <?php
         echo $_SESSION['username'] ?> to your Admin Dashboard</h2>
 
-    <form action="create-dummy-articles.php" method="post">
+    <form action="<?php echo base_url('create-dummy-articles.php'); ?>" method="post">
         <button type="submit" class="btn btn-primary mb-3">Generate Articles</button>
     </form>
 
