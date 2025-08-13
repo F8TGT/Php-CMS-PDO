@@ -19,8 +19,8 @@ $userArticles = $article->getArticlesByUser($userId);
             <input id="articleCount" min="1" style="width: 100px" class="form-control me-2" name="article_count" type="number">
             <button type="submit" class="btn btn-primary">Generate Articles</button>
         </form>
-        <form method="post">
-            <button name="reorder_articles" type="submit" class="btn btn-warning">Generate Articles</button>
+        <form action="<?php echo base_url('reorder_articles.php') ?>" method="post">
+            <button name="reorder_articles" type="submit" class="btn btn-warning">Reorder Article ID</button>
         </form>
         <button id="deleteSelectedBtn" class="btn btn-danger">Delete Selected Articles</button>
     </div>

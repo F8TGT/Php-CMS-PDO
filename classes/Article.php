@@ -196,4 +196,8 @@ class Article
 
         return true;
     }
+
+    public function reorderAndResetAutoIncrement(){
+
+    }
 }
