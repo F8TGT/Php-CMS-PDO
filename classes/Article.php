@@ -165,7 +165,7 @@ class Article
 
     public function generateDummyData($num = 1)
     {
-        $query  = "INSERT INTO " . $this->table . " (title, content, user_id, created_at, image) 
+        $query = "INSERT INTO ".$this->table." (title, content, user_id, created_at, image) 
                    VALUES (:title, :content, :user_id, :created_at, :image)";
 
         $stmt = $this->conn->prepare($query);
@@ -175,7 +175,7 @@ class Article
             'How to Stay Productive', 'A Guide to Healthy Living',
             'Exploring the World of Science', 'Understanding Mental Health',
             'The Rise of AI', 'The Power of Positive Thinking',
-            'Achieving Financial Freedom', 'The Benefits of Exercise'
+            'Achieving Financial Freedom', 'The Benefits of Exercise',
         ];
 
         $dummy_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.";
@@ -183,7 +183,7 @@ class Article
         $user_id = 11;
         $created_at = date('Y-m-d');
 
-        for($i = 0; $i < $num; $i++){
+        for ($i = 0; $i < $num; $i++) {
             $title = $dummy_titles[array_rand($dummy_titles)];
             $stmt->bindParam(':title', $title);
             $stmt->bindParam(':content', $dummy_content);
@@ -197,7 +197,45 @@ class Article
         return true;
     }
 
-    public function reorderAndResetAutoIncrement(){
+    public function reorderAndResetAutoIncrement()
+    {
+        try {
+            // DB Transaction
+            $this->conn->beginTransaction();
 
+            $query  = "SELECT id FROM " . $this->table;
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $articles = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+            // Update each Articles ID's sequentially
+
+            $newId = 1;
+            foreach($articles as $article){
+
+                $updateQuery = "UPDATE " . $this->table . " SET id = :newId WHERE id = :old_id";
+                $updateStmt = $this->conn->prepare($updateQuery);
+                $updateStmt->bindParam(':newId', $newId, PDO::PARAM_INT);
+                $updateStmt->bindParam(':old_id', $article->id, PDO::PARAM_INT);
+                $updateStmt->execute();
+                $newId++;
+            }
+
+
+            // Reset Auto_INCREMENT
+
+//            $nextAutoIncrementId = $newId;
+//            $resetQuery = "ALTER TABLE " . $this->table . " AUTO_INCREMENT = :next_auto_increment ";
+//            $resetStmt = $this->conn->prepare($resetQuery);
+//            $resetStmt->bindParam(':next_auto_increment', $nextAutoIncrementId, PDO::PARAM_INT);
+//            $resetStmt->execute();
+//
+//            $this->conn->commit();
+//            return true;
+
+        } catch (Exception $exception) {
+            $this->conn->rollBack();
+            throw $exception;
+        }
     }
 }
