@@ -224,14 +224,14 @@ class Article
 
             // Reset Auto_INCREMENT
 
-//            $nextAutoIncrementId = $newId;
-//            $resetQuery = "ALTER TABLE " . $this->table . " AUTO_INCREMENT = :next_auto_increment ";
-//            $resetStmt = $this->conn->prepare($resetQuery);
-//            $resetStmt->bindParam(':next_auto_increment', $nextAutoIncrementId, PDO::PARAM_INT);
-//            $resetStmt->execute();
-//
-//            $this->conn->commit();
-//            return true;
+            $nextAutoIncrementId = $newId;
+            $resetQuery = "ALTER TABLE " . $this->table . " AUTO_INCREMENT = :next_auto_increment ";
+            $resetStmt = $this->conn->prepare($resetQuery);
+            $resetStmt->bindParam(':next_auto_increment', $nextAutoIncrementId, PDO::PARAM_INT);
+            $resetStmt->execute();
+
+            $this->conn->commit();
+            return true;
 
         } catch (Exception $exception) {
             $this->conn->rollBack();
