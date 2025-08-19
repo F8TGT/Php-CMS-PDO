@@ -31,6 +31,7 @@ $userArticles = $article->getArticlesByUser($userId);
         <table class="table table-bordered table-hover align-middle">
             <thead class="table-dark">
             <tr>
+                <th><input type="checkbox" id="selectAll"></th>
                 <th>ID</th>
                 <th>Title</th>
                 <th>Author</th>
@@ -46,6 +47,7 @@ $userArticles = $article->getArticlesByUser($userId);
                 <?php
                 foreach ($userArticles as $articleItem): ?>
                     <tr>
+                        <td><input type="checkbox" class="articleCheckbox" value="<?php echo $articleItem->id; ?>"></td>
                         <td><?php
                             echo $articleItem->id; ?></td>
                         <td><?php
@@ -79,6 +81,28 @@ $userArticles = $article->getArticlesByUser($userId);
         </table>
     </div>
 </main>
+
+<script>
+    // Select or Deselect all checkboxes
+    document.getElementById('selectAll').onclick = function () {
+        let checkboxes = document.querySelectorAll('.articleCheckbox');
+        for (let checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    };
+
+    document.getElementById('deleteSelectedBtn').onclick = function () {
+        let selectedIds = [];
+        let checkboxes = document.querySelectorAll('.articleCheckbox:checked');
+
+        checkboxes.forEach(checkbox => {
+            selectedIds.push(checkbox.value);
+        });
+
+        console.log(selectedIds);
+    };
+</script>
+
 
 <?php
 
