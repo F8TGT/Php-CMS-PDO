@@ -99,7 +99,19 @@ $userArticles = $article->getArticlesByUser($userId);
             selectedIds.push(checkbox.value);
         });
 
-        console.log(selectedIds);
+        if(selectedIds.length === 0) {
+            alert('Please select at least 1 article');
+            return;
+        }
+
+        if(confirm('Are you sure you want to delete the article(s)?')) {
+            sendDeleteRequest(selectedIds);
+        }
+
+        function sendDeleteRequest(selectedIds) {
+            console.log("DELETE REQUEST");
+
+        }
     };
 </script>
 
