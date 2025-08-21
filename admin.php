@@ -14,12 +14,15 @@ $userArticles = $article->getArticlesByUser($userId);
         echo $_SESSION['username'] ?> to your Admin Dashboard</h2>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <form class="d-flex align-items-center" action="<?php echo base_url('create-dummy-articles.php'); ?>" method="post">
+        <form class="d-flex align-items-center" action="<?php
+        echo base_url('create-dummy-articles.php'); ?>" method="post">
             <label for="articleCount" class="form-label me-2">Number of Articles</label>
-            <input id="articleCount" min="1" style="width: 100px" class="form-control me-2" name="article_count" type="number">
+            <input id="articleCount" min="1" style="width: 100px" class="form-control me-2" name="article_count"
+                   type="number">
             <button type="submit" class="btn btn-primary">Generate Articles</button>
         </form>
-        <form action="<?php echo base_url('reorder_articles.php') ?>" method="post">
+        <form action="<?php
+        echo base_url('reorder_articles.php') ?>" method="post">
             <button name="reorder_articles" type="submit" class="btn btn-warning">Reorder Article ID</button>
         </form>
         <button id="deleteSelectedBtn" class="btn btn-danger">Delete Selected Articles</button>
@@ -39,6 +42,7 @@ $userArticles = $article->getArticlesByUser($userId);
                 <th>Excerpt</th>
                 <th>Edit</th>
                 <th>Delete</th>
+                <th>AJAX Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -47,7 +51,8 @@ $userArticles = $article->getArticlesByUser($userId);
                 <?php
                 foreach ($userArticles as $articleItem): ?>
                     <tr>
-                        <td><input type="checkbox" class="articleCheckbox" value="<?php echo $articleItem->id; ?>"></td>
+                        <td><input type="checkbox" class="articleCheckbox" value="<?php
+                            echo $articleItem->id; ?>"></td>
                         <td><?php
                             echo $articleItem->id; ?></td>
                         <td><?php
@@ -71,6 +76,11 @@ $userArticles = $article->getArticlesByUser($userId);
                                 echo $articleItem->id; ?>">
                                 <button class="btn btn-sm btn-danger" onclick="confirmDelete(1)">Delete</button>
                             </form>
+                        </td>
+                        <td>
+                            <button data-id="<?php
+                            echo $articleItem->id; ?>" class="btn btn-sm btn-danger delete-single">ajax delete
+                            </button>
                         </td>
                     </tr>
                 <?php
@@ -99,20 +109,32 @@ $userArticles = $article->getArticlesByUser($userId);
             selectedIds.push(checkbox.value);
         });
 
-        if(selectedIds.length === 0) {
+        if (selectedIds.length === 0) {
             alert('Please select at least 1 article');
             return;
         }
 
-        if(confirm('Are you sure you want to delete the article(s)?')) {
+        if (confirm('Are you sure you want to delete the article(s)?')) {
             sendDeleteRequest(selectedIds);
         }
 
-        function sendDeleteRequest(selectedIds) {
-            console.log("DELETE REQUEST");
-
-        }
     };
+
+    document.querySelectorAll('.delete-single').forEach((button) => {
+        button.onclick = function () {
+            let articleId = this.getAttribute('data-id');
+
+            if (confirm("Are you sure you want to delete the article" + articleId + "?")) {
+                sendDeleteRequest([articleId]);
+            }
+        }
+    });
+
+    // function sendDeleteRequest(articleIds) {
+    //     console.log("DELETE REQUEST");
+    //
+    // }
+
 </script>
 
 
