@@ -130,13 +130,25 @@ $userArticles = $article->getArticlesByUser($userId);
         }
     });
 
-    // function sendDeleteRequest(articleIds) {
-    //     console.log("DELETE REQUEST");
-    //
-    // }
+    function sendDeleteRequest(articleIds) {
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', "<?php echo base_url('delete_articles.php') ?>", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    alert("WE DID IT and article got deleted");
+                    location.reload();
+                } else {
+                    alert('FAILED TO DELETE: ' + response.message)
+                }
+            }
+        };
+        xhr.send(JSON.stringify({article_ids: articleIds}))
+    }
 
 </script>
-
 
 <?php
 
