@@ -203,7 +203,7 @@ class Article
             // DB Transaction
             $this->conn->beginTransaction();
 
-            $query  = "SELECT id FROM " . $this->table;
+            $query = "SELECT id FROM ".$this->table;
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             $articles = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -211,9 +211,8 @@ class Article
             // Update each Articles ID's sequentially
 
             $newId = 1;
-            foreach($articles as $article){
-
-                $updateQuery = "UPDATE " . $this->table . " SET id = :newId WHERE id = :old_id";
+            foreach ($articles as $article) {
+                $updateQuery = "UPDATE ".$this->table." SET id = :newId WHERE id = :old_id";
                 $updateStmt = $this->conn->prepare($updateQuery);
                 $updateStmt->bindParam(':newId', $newId, PDO::PARAM_INT);
                 $updateStmt->bindParam(':old_id', $article->id, PDO::PARAM_INT);
@@ -225,17 +224,20 @@ class Article
             // Reset Auto_INCREMENT
 
             $nextAutoIncrementId = $newId;
-            $resetQuery = "ALTER TABLE " . $this->table . " AUTO_INCREMENT = :next_auto_increment ";
+            $resetQuery = "ALTER TABLE ".$this->table." AUTO_INCREMENT = :next_auto_increment ";
             $resetStmt = $this->conn->prepare($resetQuery);
             $resetStmt->bindParam(':next_auto_increment', $nextAutoIncrementId, PDO::PARAM_INT);
             $resetStmt->execute();
 
             $this->conn->commit();
             return true;
-
         } catch (Exception $exception) {
             $this->conn->rollBack();
             throw $exception;
         }
+    }
+
+    public function deleteMultiple($ids) {
+
     }
 }
