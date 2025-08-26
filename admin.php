@@ -105,7 +105,7 @@ $userArticles = $article->getArticlesByUser($userId);
         let selectedIds = [];
         let checkboxes = document.querySelectorAll('.articleCheckbox:checked');
 
-        checkboxes.forEach(checkbox => {
+        checkboxes.forEach((checkbox) => {
             selectedIds.push(checkbox.value);
         });
 
@@ -117,14 +117,13 @@ $userArticles = $article->getArticlesByUser($userId);
         if (confirm('Are you sure you want to delete the article(s)?')) {
             sendDeleteRequest(selectedIds);
         }
-
     };
 
     document.querySelectorAll('.delete-single').forEach((button) => {
         button.onclick = function () {
             let articleId = this.getAttribute('data-id');
 
-            if (confirm("Are you sure you want to delete the article" + articleId + "?")) {
+            if (confirm("Are you sure you want to delete the article " + articleId + "?")) {
                 sendDeleteRequest([articleId]);
             }
         }
@@ -145,6 +144,7 @@ $userArticles = $article->getArticlesByUser($userId);
                 }
             }
         };
+
         xhr.send(JSON.stringify({article_ids: articleIds}))
     }
 

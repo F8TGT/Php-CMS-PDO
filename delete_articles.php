@@ -18,5 +18,11 @@ if (isPostRequest()) {
         } catch (Exception $e) {
             $response['message'] = 'ERROR'.$e->getMessage();
         }
+    } else {
+        $response['message'] = 'No article selected for deletion';
     }
+} else {
+    $response['message'] = 'Invalid request method';
 }
+
+echo json_encode($response);
