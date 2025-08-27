@@ -8,8 +8,8 @@ $response = ['success' => false, 'message' => ''];
 if (isPostRequest()) {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['articles_ids']) && is_array($data['articles_ids'])) {
-        $articleIds = $data['articles_ids'];
+    if (isset($data['article_ids']) && is_array($data['article_ids'])) {
+        $articleIds = $data['article_ids'];
 
         try {
             $article = new Article();
